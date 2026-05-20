@@ -1,15 +1,15 @@
-import express, { type Application, type Request, type Response } from "express"
-const app : Application = express()
-const port = 3000
 
-app.get('/', (req : Request, res : Response) => {
-  
-    res.status(200).json({
-        "message" : "Express Server",
-        "author" : "Rafi Shariar"
-    })
-})
+import app from "./app";
+import config from "./config";
+import { initDB } from "./db";
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const main = () =>{
+
+  initDB();
+
+  app.listen(config.port, () => {
+  console.log(` app listening on port ${config.port}`);
+});
+}
+
+main()

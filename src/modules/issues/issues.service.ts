@@ -26,8 +26,7 @@ const getSingleIssueFromDB = async(id:string) =>{
         
         const issue = result.rows[0];
 
-    const result2 = await pool.query(`
-        SELECT id,name,role FROM users WHERE id=$1 `,[issue.reported_id])
+    const result2 = await pool.query(`SELECT id,name,role FROM users WHERE id=$1 `,[issue.reported_id])
     
     const reporterInfo = result2.rows[0];
 

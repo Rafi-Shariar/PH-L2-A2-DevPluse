@@ -64,8 +64,9 @@ const updateIssue = async (req: Request, res: Response) => {
       if (issueReporterID === user.id && issueStatus === "open") {
         canUpdate = true;
       }
+    }
 
-      if (!canUpdate) {
+    if (!canUpdate) {
         return sendResponse(res, {
           statusCode: 403,
           success: false,
@@ -86,7 +87,6 @@ const updateIssue = async (req: Request, res: Response) => {
           data: result.rows[0],
         });
       }
-    }
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 500,

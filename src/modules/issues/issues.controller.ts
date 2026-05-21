@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import type { JwtPayload } from "jsonwebtoken";
 import { issueService } from "./issues.service";
+import { pool } from "../../db";
 
 const createIssue = async (req: Request, res: Response) => {
   try {
@@ -97,4 +98,51 @@ const updateIssue = async (req: Request, res: Response) => {
   }
 };
 
-export const issuesController = { createIssue, getSingleIssue, updateIssue };
+const deleteIssue = async(req: Request, res: Response) =>{
+
+  const {id} = req.params;
+
+  try {
+
+    const issue = await issueService.getSingleIssueFromDB(id as string)
+
+    const user = req.user as JwtPayload;
+
+    if(!issue){
+      return sendResponse(res, {
+      statusCode: 404,
+      success: false,
+      message: "Issue Not Found!"
+    });
+    }
+
+    if(user.role === "maintainer"){
+
+      const result = await issueService.deleteIssueintoDB(id as string)
+      sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Issue deleted successfully"
+    });
+
+    }
+    else{
+      sendResponse(res, {
+      statusCode: 403,
+      success: false,
+      message: "Forbidden! Don't have permission to delete."
+    });
+    }
+    
+  } catch (error:any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+
+}
+
+export const issuesController = { createIssue, getSingleIssue, updateIssue, deleteIssue };

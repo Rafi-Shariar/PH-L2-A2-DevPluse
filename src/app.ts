@@ -11,7 +11,6 @@ app.use(express.json());
 
 
 app.use('/api/auth', authRouter)
-app.use('/api/auth', authRouter)
 app.use('/api/issues',issuesRoute)
 
 

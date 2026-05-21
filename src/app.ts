@@ -10,5 +10,10 @@ app.use(express.json());
 
 
 app.use('/api/auth', authRouter)
+app.use('/api/auth', authRouter)
+
+
+
+
 app.use(globalErrorHandler)
 export default app;

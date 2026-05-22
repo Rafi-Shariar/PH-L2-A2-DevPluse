@@ -9,12 +9,25 @@ type TResponse<T> = {
 };
 
 const sendResponse  = <T> (res: Response, data: TResponse<T>) => {
-  res.status(data.statusCode).json({
-    success: data.success,
+
+ if(!data.success){
+
+  return res.status(data.statusCode).json({
+    success: false,
     message: data.message,
-    data: data.data,
-    error: data.error,
+    error : data.error
   });
+  
+  
+ }
+
+  return res.status(data.statusCode).json({
+    success: true,
+    message: data.message,
+    data: data.data !==undefined ? data.data : null,
+  });
+  
+  
 };
 
 export default sendResponse;

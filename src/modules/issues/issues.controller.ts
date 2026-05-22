@@ -108,14 +108,6 @@ const deleteIssue = async(req: Request, res: Response) =>{
 
     const user = req.user as JwtPayload;
 
-    if(!issue){
-      return sendResponse(res, {
-      statusCode: 404,
-      success: false,
-      message: "Issue Not Found!"
-    });
-    }
-
     if(user.role === "maintainer"){
 
       const result = await issueService.deleteIssueintoDB(id as string)
@@ -145,4 +137,32 @@ const deleteIssue = async(req: Request, res: Response) =>{
 
 }
 
-export const issuesController = { createIssue, getSingleIssue, updateIssue, deleteIssue };
+const getAllIssues = async(req: Request, res: Response) =>{
+
+  try {
+
+    const sort = req.query.sort as string || "newest";
+    const type = req.query.type as string;
+    const status = req.query.status as string;
+
+
+    const result = await issueService.getAllIssuesFromDB(sort,type,status)
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      data:result
+    });
+
+    
+  } catch (error:any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+
+}
+
+export const issuesController = { createIssue, getSingleIssue, updateIssue, deleteIssue, getAllIssues };

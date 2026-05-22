@@ -9,7 +9,7 @@ import cors from "cors";
 const app: Application = express();
 
 app.use(cors({
-  origin: "http://localhost:3000"
+  origin: "a2-devpulse.vercel.app"
 }));
 app.use(express.json());
 
@@ -20,5 +20,5 @@ app.use('/api/issues',issuesRoute)
 
 
 
-//app.use(globalErrorHandler)
+app.use(globalErrorHandler)
 export default app;

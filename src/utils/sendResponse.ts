@@ -8,26 +8,25 @@ type TResponse<T> = {
   error?: any;
 };
 
-const sendResponse  = <T> (res: Response, data: TResponse<T>) => {
+const sendResponse = <T>(res: Response, data: TResponse<T>) => {
+  if (!data.success) {
+    return res.status(data.statusCode).json({
+      success: false,
+      message: data.message,
+      error: data.error,
+    });
+  }
 
- if(!data.success){
-
-  return res.status(data.statusCode).json({
-    success: false,
-    message: data.message,
-    error : data.error
-  });
-  
-  
- }
-
-  return res.status(data.statusCode).json({
+  const responseBody : Record <string,any> = {
     success: true,
     message: data.message,
-    data: data.data !==undefined ? data.data : null,
-  });
-  
-  
+  }
+
+  if(data.data !== undefined){
+    responseBody.data = data.data;
+  }
+
+  return res.status(data.statusCode).json(responseBody);
 };
 
 export default sendResponse;

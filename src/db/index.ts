@@ -28,7 +28,7 @@ export const initDB = async () => {
             title VARCHAR(150) NOT NULL,
             description TEXT NOT NULL CHECK (LENGTH(description) >= 20),
             type VARCHAR(50) NOT NULL CHECK (type IN ('bug','feature_request')),
-            status VARCHAR(50) DEFAULT 'open' NOT NULL CHECK (status IN ('open', 'in_progress', 'resolve')),
+            status VARCHAR(50) DEFAULT 'open' NOT NULL CHECK (status IN ('open', 'in_progress', 'resolved')),
             reported_id INT NOT NULL,
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW()

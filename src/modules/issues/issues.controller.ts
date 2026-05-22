@@ -122,13 +122,13 @@ const deleteIssue = async(req: Request, res: Response) =>{
       sendResponse(res, {
       statusCode: 403,
       success: false,
-      message: "Forbidden! Don't have permission to delete."
+      message: "Forbidden! You don't have permission to delete."
     });
     }
     
   } catch (error:any) {
     sendResponse(res, {
-      statusCode: 500,
+      statusCode: 404,
       success: false,
       message: error.message,
       error: error,
@@ -147,7 +147,18 @@ const getAllIssues = async(req: Request, res: Response) =>{
 
 
     const result = await issueService.getAllIssuesFromDB(sort,type,status)
-    sendResponse(res, {
+
+    if(result.length === 0){
+      return sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "No Issues Found",
+      data : {}
+    });
+    }
+
+
+     return sendResponse(res, {
       statusCode: 200,
       success: true,
       data:result

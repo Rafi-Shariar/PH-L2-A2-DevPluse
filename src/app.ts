@@ -20,5 +20,5 @@ app.use('/api/issues',issuesRoute)
 
 
 
-app.use(globalErrorHandler)
+//app.use(globalErrorHandler)
 export default app;

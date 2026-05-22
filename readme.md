@@ -1,8 +1,8 @@
-# a2---devpulse
+# A2-devPulse
 
 A secure and efficient issue tracking REST API backend built to log, categorize, and prioritize software development issues like bug reports and feature requests.
 
-- **Live Deployment URL:** [https://your-deployed-app-link.com](https://your-deployed-app-link.com) *(Update with your production link)*
+- **Live Deployment URL:** [https://a2-devpulse.vercel.app/](https://a2-devpulse.vercel.app/)
 - **Local Host URL:** `http://localhost:3000`
 
 ---
